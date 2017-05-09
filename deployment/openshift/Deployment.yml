@@ -1,0 +1,17 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: caddy-test
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: caddy-test
+    spec:
+      containers:
+      - name: caddy-test
+        image: 172.30.1.1:5000/myproject/ggcaddy:dev #Automatically replaced by Jenkins
+        ports:
+        - containerPort: 3000

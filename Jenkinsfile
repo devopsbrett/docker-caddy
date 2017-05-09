@@ -13,7 +13,10 @@ node {
   stage('Fastpath') {
       withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'dockercreds',
         usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD']]) {
-            docker.image("brettm/fastpath").run("-v \$(pwd):/data -e DOCKER_USERNAME=$DOCKER_USERNAME -e DOCKER_PASSWORD=$DOCKER_PASSWORD", "HEAD $REPO")
+
+          def container = docker.image('brettm/fastpath').run("-v \$(pwd):/data -e DOCKER_USERNAME=$DOCKER_USERNAME -e DOCKER_PASSWORD=$DOCKER_PASSWORD", "HEAD $REPO")
+          container.wait()
+          container.logs()
         }
   }
 
